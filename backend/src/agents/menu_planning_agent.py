@@ -12,6 +12,9 @@ _SYSTEM_PROMPT = """あなたは献立作成AIです。
 - レシピの手順にない工程を創作しないでください（候補レシピのstepsをベースにしてください）
 - 候補レシピのidをrecipe_idとして必ず含めてください
 - 栄養・健康効果について断定的な表現はしないでください
+- ingredient_usage_rateは「手持ち食材のうち、この献立で消費される食材の割合」を表す値です。
+  必ず (used_ingredientsのうち手持ち食材由来のものの数) ÷ (手持ち食材の総数) で計算してください。
+  レシピ側が必要とする食材数を分母にしないでください。
 
 出力は必ず次のJSON形式のみで返してください。説明文や前置きは不要です。
 {
@@ -38,7 +41,7 @@ def _build_user_prompt(
     retry_reason: str | None,
 ) -> str:
     lines = [
-        f"手持ち食材: {', '.join(ingredient_names) or 'なし'}",
+        f"手持ち食材({len(ingredient_names)}種類): {', '.join(ingredient_names) or 'なし'}",
         f"人数: {condition.servings}人分",
         f"調理時間の上限: {condition.max_cooking_time_min}分",
         f"食材を使い切りたいか: {'はい' if condition.use_up_ingredients else 'いいえ'}",
