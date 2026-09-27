@@ -3,6 +3,9 @@
 # psycopg2等のコンパイル済み依存を避けるため、依存はすべてmanylinuxのビルド済みwheelを使う想定。
 set -euo pipefail
 
+# terraformのlocal-execは/bin/shの最小PATHで実行されるため明示的に補う
+export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+
 INFRA_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKEND_DIR="${INFRA_DIR}/../backend"
 BUILD_DIR="${INFRA_DIR}/build/lambda"
@@ -10,7 +13,7 @@ BUILD_DIR="${INFRA_DIR}/build/lambda"
 rm -rf "${BUILD_DIR}"
 mkdir -p "${BUILD_DIR}"
 
-pip install \
+python3.12 -m pip install \
   --platform manylinux2014_aarch64 \
   --target "${BUILD_DIR}" \
   --implementation cp \

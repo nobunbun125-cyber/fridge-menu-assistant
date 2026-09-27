@@ -8,7 +8,7 @@ from src.schemas.agent_io import DraftMenuItem, MenuCondition
 class MenuCreateRequest(BaseModel):
     extra_ingredients_text: str = ""
     condition: MenuCondition = MenuCondition()
-    count: int = Field(default=3, ge=1, le=5)
+    count: int = Field(default=3, ge=1, le=3)
 
 
 class MenuResult(BaseModel):

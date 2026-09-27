@@ -120,6 +120,23 @@ select {
   background: var(--card-bg);
 }
 
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 16px 0;
+}
+
+.guest-button {
+  width: 100%;
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.guest-button:hover {
+  background: var(--bg);
+}
+
 .form {
   display: flex;
   flex-direction: column;

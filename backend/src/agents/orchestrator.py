@@ -1,5 +1,7 @@
 """AIオーケストレーター: 4つのAgentを順番に呼び出し、検証NGなら再生成をループする。"""
 
+from concurrent.futures import ThreadPoolExecutor
+
 from src.agents import ingredient_agent, menu_planning_agent, recipe_search_agent, validation_agent
 from src.schemas.agent_io import CandidateRecipe, DraftMenuItem, MenuCondition
 from src.schemas.menu import MenuResult
@@ -57,10 +59,17 @@ def generate_menus(
     if not search_result.candidates:
         raise MenuGenerationError("条件に合うレシピ候補が見つかりませんでした")
 
-    return [
-        _plan_and_validate(all_ingredient_names, [candidate], condition)
-        for candidate in search_result.candidates[:count]
-    ]
+    candidates = search_result.candidates[:count]
+
+    # 候補ごとの献立作成Agent呼び出しはお互い独立しているため並列化し、
+    # API Gatewayの応答時間制約(29秒)に収まりやすくする
+    with ThreadPoolExecutor(max_workers=len(candidates)) as executor:
+        return list(
+            executor.map(
+                lambda candidate: _plan_and_validate(all_ingredient_names, [candidate], condition),
+                candidates,
+            )
+        )
 
 
 def generate_menu(

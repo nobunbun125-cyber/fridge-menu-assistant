@@ -132,8 +132,6 @@ export function MenuCreatePage() {
             <option value={1}>1件（一番のおすすめだけ）</option>
             <option value={2}>2件</option>
             <option value={3}>3件</option>
-            <option value={4}>4件</option>
-            <option value={5}>5件</option>
           </select>
         </label>
         {error && <p className="error-text">{error}</p>}

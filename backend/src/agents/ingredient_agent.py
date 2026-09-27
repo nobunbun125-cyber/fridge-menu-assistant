@@ -1,5 +1,6 @@
 """食材解析Agent: 自然言語の食材テキストを構造化データに変換する。"""
 
+from src.core.config import settings
 from src.core.llm_client import call_llm_json
 from src.schemas.agent_io import IngredientAgentOutput
 
@@ -19,5 +20,8 @@ _SYSTEM_PROMPT = """あなたは食材解析AIです。
 def run(raw_text: str) -> IngredientAgentOutput:
     if not raw_text.strip():
         return IngredientAgentOutput(ingredients=[])
-    data = call_llm_json(_SYSTEM_PROMPT, raw_text, max_tokens=1024)
+    # 単純な抽出タスクのため、献立作成より軽量・高速なモデルを使う
+    data = call_llm_json(
+        _SYSTEM_PROMPT, raw_text, model=settings.anthropic_model_light, max_tokens=1024
+    )
     return IngredientAgentOutput.model_validate(data)

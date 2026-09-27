@@ -18,3 +18,7 @@ export function login(email: string, password: string): Promise<TokenResponse> {
     body: JSON.stringify({ email, password }),
   });
 }
+
+export function guestLogin(): Promise<TokenResponse> {
+  return apiRequest<TokenResponse>("/auth/guest", { method: "POST" });
+}

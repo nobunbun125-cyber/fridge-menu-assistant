@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, register } from "../api/auth";
+import { guestLogin, login, register } from "../api/auth";
 import { ApiError } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 
@@ -20,6 +20,20 @@ export function LoginPage() {
     setSubmitting(true);
     try {
       const response = mode === "login" ? await login(email, password) : await register(email, password);
+      setAuthenticated(response.access_token);
+      navigate("/fridge");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "予期しないエラーが発生しました");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setError(null);
+    setSubmitting(true);
+    try {
+      const response = await guestLogin();
       setAuthenticated(response.access_token);
       navigate("/fridge");
     } catch (err) {
@@ -58,6 +72,10 @@ export function LoginPage() {
         onClick={() => setMode(mode === "login" ? "register" : "login")}
       >
         {mode === "login" ? "アカウントを新規登録する" : "ログイン画面に戻る"}
+      </button>
+      <hr className="divider" />
+      <button type="button" onClick={handleGuestLogin} disabled={submitting} className="guest-button">
+        ログインせずにゲストとして試す
       </button>
     </div>
   );

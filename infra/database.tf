@@ -4,7 +4,7 @@
 
 resource "aws_security_group" "db" {
   name        = "${var.project_name}-db"
-  description = "RDS PostgreSQL用。LambdaはVPC外のため送信元IPを絞れず全許可にしている"
+  description = "RDS PostgreSQL security group (public; see docs/aws_deployment.md for the trade-off)"
 
   ingress {
     description = "PostgreSQL from anywhere (see docs/aws_deployment.md for the trade-off)"

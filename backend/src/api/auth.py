@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -18,6 +20,19 @@ def register(payload: UserCreate, db: Session = Depends(get_db)) -> TokenRespons
         )
 
     user = User(email=payload.email, hashed_password=hash_password(payload.password))
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token = create_access_token(subject=str(user.id))
+    return TokenResponse(access_token=token)
+
+
+@router.post("/guest", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
+def guest_login(db: Session = Depends(get_db)) -> TokenResponse:
+    """デモ・動作確認用。使い捨てのゲストアカウントを作成してその場でログインする。"""
+    guest_email = f"guest-{uuid.uuid4().hex[:12]}@example.com"
+    user = User(email=guest_email, hashed_password=hash_password(uuid.uuid4().hex))
     db.add(user)
     db.commit()
     db.refresh(user)
