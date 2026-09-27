@@ -1,0 +1,9 @@
+# cp terraform.tfvars.example terraform.tfvars して値を埋める。
+# terraform.tfvars 自体は .gitignore 済みでコミットされない。
+
+anthropic_api_key  = "sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+db_master_password = "change-me-to-a-strong-random-password"
+jwt_secret_key      = "change-me-to-a-random-secret"
+
+# aws_region   = "ap-northeast-1"
+# project_name = "fridge-menu"

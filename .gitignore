@@ -29,3 +29,10 @@ dist/
 
 # Logs
 *.log
+
+# Terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/terraform.tfvars
+infra/build/

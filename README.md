@@ -21,7 +21,7 @@
    [SQLite: users / ingredients / menu_history / user_preferences]
 ```
 
-詳細は [docs/architecture.md](docs/architecture.md)、Agent/RAG設計は [docs/agent_design.md](docs/agent_design.md)、要件定義は [docs/requirements.md](docs/requirements.md) を参照。
+詳細は [docs/architecture.md](docs/architecture.md)、Agent/RAG設計は [docs/agent_design.md](docs/agent_design.md)、要件定義は [docs/requirements.md](docs/requirements.md)、AWSデプロイ設計は [docs/aws_deployment.md](docs/aws_deployment.md) を参照。
 
 ## 技術スタック
 
@@ -90,10 +90,14 @@ ruff check src tests
 cd frontend && npm run lint && npm run build
 ```
 
+## AWSデプロイ
+
+`infra/`にTerraform一式を用意している。設計の背景・コスト試算・セキュリティ上のトレードオフは [docs/aws_deployment.md](docs/aws_deployment.md)、手順は [infra/README.md](infra/README.md) を参照。
+
 ## 今後の改善予定
 
 - レシピ検索のRAGをembedding/ベクトル検索へ高度化（sqlite-vec → OpenSearch Serverless）
-- AWSへのデプロイ（S3+CloudFront / Lambda or ECS Fargate / RDS PostgreSQL / Cognito）
 - 認証をCognitoへ移行し、自前JWT実装との比較を行う
-- GitHub ActionsでのAWSへの自動デプロイ
+- GitHub ActionsからAWSへのOIDC連携・自動デプロイ（現状はTerraformを手元から実行する想定）
+- Lambda + IAM DB認証の実装（現状はマスターパスワードをSSM経由で使用）
 - LangGraph等のAgentフレームワークを使った実装との比較検証
