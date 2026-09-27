@@ -60,7 +60,8 @@ button:disabled {
 input[type="text"],
 input[type="email"],
 input[type="password"],
-input[type="number"] {
+input[type="number"],
+select {
   font: inherit;
   padding: 8px;
   border: 1px solid var(--border);
@@ -139,6 +140,27 @@ input[type="number"] {
   gap: 8px !important;
 }
 
+.form-group-label {
+  display: block;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.course-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.course-checkbox {
+  width: auto;
+}
+
+.course-checkbox input {
+  width: auto;
+}
+
 .form-inline {
   display: flex;
   gap: 8px;
@@ -157,6 +179,28 @@ input[type="number"] {
 .warning-text {
   color: #b8860b;
   font-size: 14px;
+}
+
+.step-hint {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.next-step {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.next-step a {
+  margin-left: 6px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.next-step a:hover {
+  text-decoration: underline;
 }
 
 .link-button {
@@ -203,6 +247,86 @@ input[type="number"] {
 .ingredient-tag button:hover {
   color: var(--danger);
   background: none;
+}
+
+.menu-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.menu-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  padding: 6px 10px;
+  margin-bottom: -1px;
+}
+
+.menu-tab input[type="checkbox"] {
+  width: auto;
+}
+
+.menu-tab-label,
+.menu-tab-label:hover {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 2px 0;
+  color: inherit;
+  font: inherit;
+}
+
+.menu-tab:hover {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.menu-tab.active {
+  background: var(--card-bg);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.menu-tab.active .menu-tab-label {
+  font-weight: 600;
+}
+
+.menu-tab.checked:not(.active) {
+  color: var(--accent);
+}
+
+.badge-inline {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(47, 143, 78, 0.12);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+.badge-inline.saved {
+  color: var(--text-muted);
+  background: var(--border);
+}
+
+.badge-inline.course {
+  color: var(--text-muted);
+  background: var(--border);
+  font-weight: 500;
+}
+
+.menu-tab-panel {
+  margin-bottom: 20px;
 }
 
 .menu-detail {

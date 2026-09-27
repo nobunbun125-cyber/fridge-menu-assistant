@@ -28,6 +28,8 @@ def search(ingredient_names: list[str], condition: MenuCondition, top_k: int = 5
             continue
         if recipe["category"] in condition.disliked_categories:
             continue
+        if condition.desired_courses and recipe["course"] not in condition.desired_courses:
+            continue
 
         recipe_ingredients = set(recipe["ingredients"])
         if condition.allergies and recipe_ingredients & set(condition.allergies):
@@ -46,6 +48,7 @@ def search(ingredient_names: list[str], condition: MenuCondition, top_k: int = 5
                 id=recipe["id"],
                 name=recipe["name"],
                 category=recipe["category"],
+                course=recipe["course"],
                 ingredients=recipe["ingredients"],
                 steps=recipe["steps"],
                 cooking_time_min=recipe["cooking_time_min"],

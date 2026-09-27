@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { createIngredientsFromText, deleteIngredient, listIngredients } from "../api/ingredients";
 import { ApiError } from "../api/client";
 import type { Ingredient } from "../types";
@@ -54,6 +55,9 @@ export function FridgePage() {
   return (
     <div>
       <h1>冷蔵庫</h1>
+      <p className="step-hint">
+        ① ここで手持ちの食材を登録 → ② 「献立作成」で条件を指定 → ③ AIが献立を提案します
+      </p>
       <form onSubmit={handleAdd} className="form-inline">
         <input
           type="text"
@@ -69,18 +73,30 @@ export function FridgePage() {
       {loading ? (
         <p>読み込み中...</p>
       ) : (
-        <ul className="ingredient-list">
-          {ingredients.map((ingredient) => (
-            <li key={ingredient.id} className="ingredient-tag">
-              <span>{ingredient.name}</span>
-              <span className="category">{ingredient.category}</span>
-              <button type="button" onClick={() => handleDelete(ingredient.id)} aria-label="削除">
-                ×
-              </button>
-            </li>
-          ))}
-          {ingredients.length === 0 && <p>まだ食材が登録されていません。</p>}
-        </ul>
+        <>
+          <ul className="ingredient-list">
+            {ingredients.map((ingredient) => (
+              <li key={ingredient.id} className="ingredient-tag">
+                <span>{ingredient.name}</span>
+                <span className="category">{ingredient.category}</span>
+                <button type="button" onClick={() => handleDelete(ingredient.id)} aria-label="削除">
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+          {ingredients.length === 0 ? (
+            <p>
+              まだ食材が登録されていません。上の欄に「鶏もも肉とキャベツと卵があります」のように
+              文章で入力して「追加」を押してください。AIが自動で食材ごとに分けて登録します。
+            </p>
+          ) : (
+            <p className="next-step">
+              食材の登録ができたら
+              <Link to="/menu/new">献立作成へ進む →</Link>
+            </p>
+          )}
+        </>
       )}
     </div>
   );

@@ -23,12 +23,15 @@ class MenuCondition(BaseModel):
     liked_categories: list[str] = Field(default_factory=list)
     disliked_categories: list[str] = Field(default_factory=list)
     allergies: list[str] = Field(default_factory=list)
+    # 主食/主菜/副菜/汁物。空リストなら絞り込みなし（全種類が対象）。
+    desired_courses: list[str] = Field(default_factory=list)
 
 
 class CandidateRecipe(BaseModel):
     id: str
     name: str
     category: str
+    course: str  # 主食 / 主菜 / 副菜 / 汁物
     ingredients: list[str]
     steps: list[str]
     cooking_time_min: int
@@ -44,6 +47,7 @@ class RecipeSearchAgentOutput(BaseModel):
 class DraftMenuItem(BaseModel):
     recipe_id: str
     menu_name: str
+    course: str = ""  # LLMには出力させず、orchestratorが元レシピの値で確定させる
     used_ingredients: list[str]
     missing_ingredients: list[str]
     steps: list[str]

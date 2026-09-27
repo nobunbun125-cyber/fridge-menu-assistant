@@ -11,11 +11,15 @@ export interface MenuCondition {
   liked_categories: string[];
   disliked_categories: string[];
   allergies: string[];
+  desired_courses: string[];
 }
+
+export const COURSE_OPTIONS = ["主食", "主菜", "副菜", "汁物"] as const;
 
 export interface DraftMenuItem {
   recipe_id: string;
   menu_name: string;
+  course: string;
   used_ingredients: string[];
   missing_ingredients: string[];
   steps: string[];
@@ -46,4 +50,5 @@ export const DEFAULT_CONDITION: MenuCondition = {
   liked_categories: [],
   disliked_categories: [],
   allergies: [],
+  desired_courses: [],
 };

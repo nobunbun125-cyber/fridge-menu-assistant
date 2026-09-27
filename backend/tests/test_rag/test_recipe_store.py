@@ -28,3 +28,18 @@ def test_search_returns_empty_when_no_overlap():
     condition = MenuCondition(servings=2, max_cooking_time_min=30)
     results = search(["謎の食材X"], condition)
     assert results == []
+
+
+def test_search_filters_by_desired_courses():
+    condition = MenuCondition(servings=2, max_cooking_time_min=60, desired_courses=["副菜"])
+    results = search(["キャベツ", "玉ねぎ", "にんじん", "ピーマン", "ツナ缶"], condition)
+
+    assert len(results) > 0
+    assert all(r.course == "副菜" for r in results)
+
+
+def test_search_without_desired_courses_returns_any_course():
+    condition = MenuCondition(servings=2, max_cooking_time_min=60)
+    results = search(["鶏もも肉", "キャベツ", "卵", "玉ねぎ", "味噌"], condition)
+    courses = {r.course for r in results}
+    assert len(courses) >= 1

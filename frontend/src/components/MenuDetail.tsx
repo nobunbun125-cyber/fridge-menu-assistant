@@ -22,6 +22,12 @@ export function MenuDetail({
         </p>
       )}
       <dl className="menu-meta">
+        {menu.course && (
+          <>
+            <dt>料理の種類</dt>
+            <dd>{menu.course}</dd>
+          </>
+        )}
         <dt>人数</dt>
         <dd>{menu.servings}人分</dd>
         <dt>調理時間</dt>

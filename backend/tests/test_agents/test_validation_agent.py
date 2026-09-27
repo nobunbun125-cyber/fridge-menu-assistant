@@ -9,6 +9,7 @@ def _candidate(**overrides) -> CandidateRecipe:
         id="r001",
         name="テストレシピ",
         category="炒め物",
+        course="主菜",
         ingredients=["鶏もも肉", "キャベツ"],
         steps=["切る", "炒める"],
         cooking_time_min=20,
