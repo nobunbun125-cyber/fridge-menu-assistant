@@ -1,5 +1,7 @@
 # 冷蔵庫AI献立アシスタント
 
+[![CI](https://github.com/nobunbun125-cyber/fridge-menu-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/nobunbun125-cyber/fridge-menu-assistant/actions/workflows/ci.yml)
+
 冷蔵庫にある食材を入力すると、AI（Multi Agent構成）が条件に合わせて献立を提案するWebアプリ。
 生成AI・AI Agent・Multi Agent・RAG・AWS・SaaS・CI/CDを実際に設計・実装し、AI駆動開発を経験することを目的とした個人開発プロジェクト。
 
